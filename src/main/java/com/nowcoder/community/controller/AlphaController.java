@@ -11,6 +11,6 @@ public class AlphaController {
     @RequestMapping("/hello")
     @ResponseBody
     public String sayHello(){
-        return "Hello spring boot";
+        return "Hello spring boot 666";
     }
 }
