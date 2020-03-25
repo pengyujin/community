@@ -15,7 +15,6 @@ public class LoggerTests {
     
     @Test
     public void testLogger() {
-        //12345
         System.out.println(logger.getName());
         logger.debug("debug");
         logger.info("info");
