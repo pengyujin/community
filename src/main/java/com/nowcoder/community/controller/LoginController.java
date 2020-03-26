@@ -41,7 +41,7 @@ public class LoginController implements CommunityConstant {
     private String contextPath;
 
     @RequestMapping(path = "/register", method = RequestMethod.GET)
-    public String getRegisterpage() {
+    public String getRegisterPage() {
         return "/site/register";
     }
 
@@ -78,7 +78,7 @@ public class LoginController implements CommunityConstant {
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public String getLoginpage() {
+    public String getLoginPage() {
         return "/site/login";
     }
 
