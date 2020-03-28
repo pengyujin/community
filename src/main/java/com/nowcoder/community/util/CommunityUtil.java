@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ *  工具类：生成UUID,ajax异步请求返回JSON数据，
+ */
 public class CommunityUtil {
     
     // 生成随机字符串

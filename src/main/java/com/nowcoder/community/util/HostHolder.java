@@ -4,7 +4,7 @@ import com.nowcoder.community.entity.User;
 import org.springframework.stereotype.Component;
 
 /**
- * 持有用户的信息，用于代替session对象.
+ * 用Threadlocal实现持有用户的信息，用于代替session对象.
  */
 @Component
 public class HostHolder {

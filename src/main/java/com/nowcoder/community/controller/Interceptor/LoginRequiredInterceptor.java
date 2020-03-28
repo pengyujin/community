@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
+/**
+ *  自定义拦截器：登陆拦截器，判断用户是否已经登陆
+ */
 @Component
 public class LoginRequiredInterceptor implements HandlerInterceptor {
     

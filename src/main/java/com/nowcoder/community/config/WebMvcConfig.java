@@ -20,7 +20,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     private LoginRequiredInterceptor loginRequiredInterceptor;
-    
+
+    /**
+     * 注册拦截器，过滤静态资源访问
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(alphaInterceptor)

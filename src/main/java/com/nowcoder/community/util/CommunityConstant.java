@@ -1,5 +1,8 @@
 package com.nowcoder.community.util;
 
+/**
+ *  定义项目常量
+ */
 public interface CommunityConstant {
 
     /**

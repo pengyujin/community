@@ -11,6 +11,12 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  敏感词过滤工具类
+ *  用前缀树实现
+ *  1.先构造前缀树，2.第一个指针指向前缀树的根节点，3.第二个指针指向字符串的首部，第三个指针指向字符串的下一位
+ *  
+ */
 @Component
 public class SensitiveFilter {
     

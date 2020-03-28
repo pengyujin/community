@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
+/**
+ *  登陆验证拦截器
+ *  验证用户的cookie是否有限
+ */
 @Component
 public class LoginTicketInterceptor implements HandlerInterceptor {
     

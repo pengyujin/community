@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
+/**
+ * 生成验证码
+ */
 @Configuration
 public class KaptchaConfig {
     

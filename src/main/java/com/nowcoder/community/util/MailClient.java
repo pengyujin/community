@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+/**
+ *  邮件发送工具类，使用thymeleaf模板引擎
+ */
 @Component
 public class MailClient {
     
