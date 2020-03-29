@@ -9,6 +9,7 @@ import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
 import com.nowcoder.community.util.RedisKeyUtil;
+import com.sun.xml.internal.bind.v2.TODO;
 import io.lettuce.core.RedisURI;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserService implements CommunityConstant {
@@ -47,9 +49,15 @@ public class UserService implements CommunityConstant {
     
     @Value("${server.servlet.context-path}")
     private String contextPath;
-    
+
+    //TODO 重构代码2020/3/29
     public User findUserById(int id) {
-        return userMapper.selectById(id);
+//        return userMapper.selectById(id);
+        User user = getCache(id);
+        if (user == null) {
+            user = initCache(id);
+        }
+        return user;
     }
     
     public Map<String, Object> register(User user) {
@@ -111,6 +119,8 @@ public class UserService implements CommunityConstant {
             return ACTIVATION_REPEAT;
         } else if(user.getActivationCode().equals(code)) {
             userMapper.updateStatus(userId,1);
+            // 用户更新清理缓存
+            clearCache(userId);
             return ACTIVATION_SUCCESS;
         } else {
             return ACTIVATION_FAILURE;
@@ -145,7 +155,8 @@ public class UserService implements CommunityConstant {
             map.put("passwordMsg", "密码不正确");
             return map;
         }
-        
+
+        //TODO 重构代码2020/3/29
         //生成登陆凭证 浏览器需要的是ticket
         //存放在数据库，类似session
         LoginTicket loginTicket = new LoginTicket();
@@ -161,6 +172,7 @@ public class UserService implements CommunityConstant {
         return map;
     }
     
+    //TODO 重构代码2020/3/29
     public void logout(String ticket) {
 //        loginTicketMapper.updateStatus(ticket,1);
         String redisKey = RedisKeyUtil.getTicketKey(ticket);
@@ -168,8 +180,8 @@ public class UserService implements CommunityConstant {
         loginTicket.setStatus(1);
         redisTemplate.opsForValue().set(redisKey, loginTicket);
     }
-    
-    
+
+    //TODO 重构代码2020/3/29
     public LoginTicket findLoginTicket(String ticket) {
 //        return loginTicketMapper.selectByTicket(ticket);
         String redisKey = RedisKeyUtil.getTicketKey(ticket);
@@ -177,10 +189,32 @@ public class UserService implements CommunityConstant {
     }
     
     public int updateHeader(int userId, String headerUrl) {
-        return userMapper.updateHeader(userId, headerUrl);
+//        return userMapper.updateHeader(userId, headerUrl);
+        int rows =  userMapper.updateHeader(userId, headerUrl);
+        clearCache(userId);
+        return rows;
     }
     
     public User findUserByName(String username) {
         return userMapper.selectByName(username);
+    }
+    
+    
+    // 1.优先从缓存中取值
+    private User getCache(int userId) {
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        return (User) redisTemplate.opsForValue().get(redisKey);
+    }
+    // 2.取不到时初始化缓存数据
+    private User initCache(int userId) {
+        User user = userMapper.selectById(userId);
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.opsForValue().set(redisKey, user, 3600, TimeUnit.SECONDS);
+        return user;
+    }
+    // 3.当数据变更时清除缓存数据
+    private void clearCache(int userId) {
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.delete(redisKey);
     }
 }
