@@ -163,8 +163,9 @@ public class MessageController implements CommunityConstant {
         
         // 查询评论类的通知
         Message message = messageService.findLatestNotice(user.getId(), TOPIC_COMMENT);
-        Map<String, Object> messageVo = new HashMap<>();
+        
         if (message != null) {
+            Map<String, Object> messageVo = new HashMap<>();
             messageVo.put("message", message);
             // 还原content中的信息
             // 反转义,{&quot;entityType&quot;:3,&quot;entityId&quot;:11,&quot;userId&quot;:154}
@@ -183,13 +184,15 @@ public class MessageController implements CommunityConstant {
             // 系统通知：未读数量
             int unread = messageService.findNoticeUnreadCount(user.getId(), TOPIC_COMMENT);
             messageVo.put("unread", unread);
+            model.addAttribute("commentNotice", messageVo);
         }
-        model.addAttribute("commentNotice", messageVo);
+        
         
         // 查询点赞类的通知
         message = messageService.findLatestNotice(user.getId(), TOPIC_LIKE);
-        messageVo = new HashMap<>();
+        
         if (message != null) {
+            Map<String, Object> messageVo = new HashMap<>();
             messageVo.put("message", message);
             // 还原content中的信息
             // 反转义,{&quot;entityType&quot;:3,&quot;entityId&quot;:11,&quot;userId&quot;:154}
@@ -208,13 +211,15 @@ public class MessageController implements CommunityConstant {
             // 系统通知：未读数量
             int unread = messageService.findNoticeUnreadCount(user.getId(), TOPIC_LIKE);
             messageVo.put("unread", unread);
+            model.addAttribute("likeNotice", messageVo);
         }
-        model.addAttribute("likeNotice", messageVo);
+        
         
         // 查询关注类的通知
         message = messageService.findLatestNotice(user.getId(), TOPIC_FOLLOW);
-        messageVo = new HashMap<>();
+        
         if (message != null) {
+            Map<String, Object> messageVo = new HashMap<>();
             messageVo.put("message", message);
             // 还原content中的信息
             // 反转义,{&quot;entityType&quot;:3,&quot;entityId&quot;:11,&quot;userId&quot;:154}
@@ -234,8 +239,8 @@ public class MessageController implements CommunityConstant {
             int unread = messageService.findNoticeUnreadCount(user.getId(), TOPIC_FOLLOW);
             System.out.println(unread);
             messageVo.put("unread", unread);
+            model.addAttribute("followNotice", messageVo);
         }
-        model.addAttribute("followNotice", messageVo);
         
         // 查询未读消息数量,1.私信 2.系统消息
         int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(), null);

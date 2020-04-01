@@ -64,8 +64,25 @@ public interface CommunityConstant {
      *  主题：发帖
      */
     String TOPIC_PUBLISH = "publish";
+    
     /**
      *  系统用户Id
      */
     int SYSTEM_USER_ID = 1;
+
+    /**
+     *  权限：用户
+     */
+    String AUTHORINY_USER = "user";
+
+    /**
+     *  权限：管理员
+     */
+    String AUTHORINY_ADMIN = "admin";
+
+    /**
+     *  权限：版主
+     */
+    String AUTHORINY_MODERATOR = "moderator";
+
 }
