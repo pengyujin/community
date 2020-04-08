@@ -43,7 +43,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         AUTHORINY_USER, 
                         AUTHORINY_ADMIN, 
                         AUTHORINY_MODERATOR
-                ).anyRequest().permitAll()
+                ).antMatchers(
+                        "/discuss/top",
+                    "/discuss/wonderful")
+                .hasAnyAuthority(
+                        AUTHORINY_MODERATOR
+                ).antMatchers(
+                        "/discuss/delete"
+                ).hasAnyAuthority(
+                        AUTHORINY_ADMIN
+                )
+                .anyRequest().permitAll()
                 .and().csrf().disable();
         
         // 权限
