@@ -20,12 +20,13 @@ public class AlphaService {
         System.out.println("实例化AlphaService");
     }
     
-    @PostConstruct
+    // spring容器启动的时候会检测到这个类用@Service注解，会执行相应的方法@PostConstruct、@PreDestroy
+//    @PostConstruct
     public void init() {
         System.out.println("初始化AlphaService");
     }
     
-    @PreDestroy
+//    @PreDestroy
     public void destory() {
         System.out.println("销毁AlphaService");
     }
