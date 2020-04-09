@@ -31,12 +31,12 @@ public class AlphaService {
     }
     
     // 测试spring线程池快速使用
-    @Async //让该方法在多线程环境下，被异步的调用，开启这个注解，在ThreadPoolConfig配置类中开启
+//    @Async //让该方法在多线程环境下，被异步的调用，开启这个注解，在ThreadPoolConfig配置类中开启
     public void execute1() {
         logger.debug("execute1");
     }
 
-    @Scheduled(initialDelay = 10000, fixedRate = 1000)
+//    @Scheduled(initialDelay = 10000, fixedRate = 1000)
     public void execute2() {
         logger.debug("execute2");
     }
