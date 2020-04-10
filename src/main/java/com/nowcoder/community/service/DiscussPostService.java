@@ -88,23 +88,23 @@ public class DiscussPostService {
     }
     public List<DiscussPost> findDiscussPosts(int userId, int offset, int limit, int orderMode) {
         // 首页都能看帖子，与用户无关，而且是热帖才缓存
-//        if (userId == 0 && orderMode == 1) {
-//            // 用offset和limit为key
-//            return postListCache.get(offset + ":" + limit);
-//            // 如果一级缓存没有，去二级缓存redis找
-//
-//            // 如果二级缓存也没有，去数据库找
-//            // 数据库找到了，应该更新一级缓存和二级缓存的数据
-//        }
-//     
+        if (userId == 0 && orderMode == 1) {
+            // 用offset和limit为key
+            return postListCache.get(offset + ":" + limit);
+            // 如果一级缓存没有，去二级缓存redis找
+
+            // 如果二级缓存也没有，去数据库找
+            // 数据库找到了，应该更新一级缓存和二级缓存的数据
+        }
+     
         logger.debug("load post list from DB");
         return discussPostMapper.selectDiscussPosts(userId, offset, limit, orderMode);
     }
 
     public int findDiscussPostRows(int userId) {
-//        if (userId == 0) {
-//            return postRowsCache.get(userId);
-//        }
+        if (userId == 0) {
+            return postRowsCache.get(userId);
+        }
         
         logger.debug("load post rows from DB");
         return discussPostMapper.selectDiscussPostRows(userId);
